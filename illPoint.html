@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title> Bill Point</title>
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <!-- <link rel="stylesheet" type="text/css" href="assets/styles.css?v=16"> -->
+    <link rel="shortcut icon" href="https://billpoint.co/assets/frontend/assets/images/logo.png" type="image/x-icon">
+    <script src="https://cdn.tailwindcss.com"></script>
+
+
+    <meta name="csrf-token" content="Tnr993KJlvZ26rMRlO5XHXBwAalALo1tJuZnVjd9" />
+    <style type="text/tailwindcss">
+        @layer utilities {
+
+            @font-face {
+                font-family: Briston;
+                src: url("https://billpoint.co/assets/frontend/assets/font/Briston_Regular.ttf");
+            }
+
+            html,
+            body {
+                @apply scroll-smooth font-['Inter'];
+            }
+
+            .title {
+                @apply font-['Briston'] text-[42px] sm:text-[52px] md:text-[60px];
+            }
+
+            .subtitle {
+                @apply text-[18px] font-[800];
+            }
+
+            .faq-button-style {
+                @apply min-w-[40px] min-h-[40px] rounded-full text-dark bg-white border border-gray-300 flex items-center justify-center;
+            }
+
+            [x-cloak] {
+                display: none !important;
+            }
+
+            .container {
+                @apply p-5 lg:max-w-5xl xl:max-w-6xl 2xl:max-w-7xl mx-auto;
+            }
+
+            .modal-wrapper {
+                @apply overflow-hidden z-[500] overflow-y-auto fixed top-0 h-screen w-full left-0 bg-black bg-opacity-70;
+            }
+
+            .modal-inner-wrapper {
+                @apply flex flex-col items-center sticky top-0 z-[200] justify-center min-h-[100vh] w-full p-5
+            }
+
+            .modal-body {
+                @apply rounded-xl bg-white p-3 relative z-[300];
+            }
+
+        }
+    </style>
+
+        <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dark: '#212121',
+                        black: '#000',
+                        light: '#FAFAFA',
+                        'light-orange': '#FEF0E6',
+                        primary: '#F66B03',
+                        'deep-primary': '#C35618'
+                    }
+                }
+            }
+        }
+    </script>
+
+</head>
+
+<body x-data>
+
+    <div class="modal-wrapper z-[400]" x-data="{ isModalOpen: false, wasClicked: false }"
+@trigger-open-modal.window="isModalOpen = !isModalOpen; wasClicked = true"
+@trigger-close-modal.window="isModalOpen = false" x-show="isModalOpen" x-transition x-cloak>
+<section class="modal-inner-wrapper">
+    <section class="modal-body rounded-lg shadow md:w-[60%] px-5 bg-white"
+        @click.outside="isModalOpen = wasClicked; wasClicked = false">
+        <div class="flex justify-end">
+            <button class="w-[30px] h-[30px] rounded-full bg-gray-200" x-on:click="isModalOpen = false">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <section class="grid lg:grid-cols-3 gap-5 p-7">
+            <section
+                class="lg:col-span-2  order-2 lg:order-1 flex flex-col justify-center items-start space-y-5">
+                <h1 class="font-['Briston'] text-[32px] md:text-[42px] leading-none">
+                    Download the Billpoint app and <span class="text-primary">enjoy effortless</span> bill
+                    management.
+                </h1>
+
+                <div class="flex items-center space-x-5">
+                    <a href="https://play.google.com/store/apps/details?id=co.billpoint.app&pcampaignid=web_share">
+                        <img src="https://billpoint.co/assets/frontend/assets/images/google_play.png" alt=""
+                        class="h-[50px] w-auto">
+                    </a>
+                    <a href="https://apps.apple.com/ng/app/9ja-billpoint/id6742237382">
+                        <img src="https://billpoint.co/assets/frontend/assets/images/apple_store.png" alt="Apple Store" class="relative z-20">
+                    </a>
+
+
+
+
+                </div>
+            </section>
+            <section class="order-1 lg:order-2  flex space-x-5 items-end justify-center">
+                <img src="https://billpoint.co/assets/frontend/assets/images/scan.png" alt=""
+                    class="max-w-[150px] h-auto" />
+            </section>
+        </section>
+    </section>
+</section>
+</div>
+
+
+<section class="bg-primary min-h-screen py-5 relative"
+style="background-image: url('https://billpoint.co/assets/frontend/assets/svgs/illustration1.svg')">
+<section x-data="{ showDrawer: false }">
+    <section class="bg-black fixed top-0 left-0 w-full h-full bg-opacity-60 z-[1000]" x-show="showDrawer"
+        x-transition x-cloak>
+        <div class="flex flex-col items-start bg-white rounded-r-[100px] h-full w-3/4 p-5"
+            x-on:click.away="showDrawer = false">
+           <ul class="space-y-5 flex-1 space-x-8">
+    <li>
+        <a href="#">Home</a>
+    </li>
+
+    <li>
+        <a href="https://billpoint.co/about-us">About</a>
+    </li>
+
+
+    <li>
+        <a href="https://billpoint.co/faq">FAQ</a>
+    </li>
+
+    <li>
+        <a href="https://billpoint.co/contact">Contact Us</a>
+    </li>
+    <li>
+        <a href="https://billpoint.co/become-agent">Become an Agent</a>
+    </li>
+
+    <li>
+        <a href="https://billpoint.co/terms">Terms</a>
+    </li>
+</ul>
+            <button
+                class="bg-white rounded-full px-5 text-xs md:text-base sm:px-10 py-3 border border-primary flex items-center space-x-3">
+                <span>Download app</span>
+                <img src="https://billpoint.co/assets/frontend/assets/svgs/arrow-right.svg" alt=""
+                    class="hidden md:inline" />
+            </button>
+        </div>
+    </section>
+    <header class="flex items-center justify-between bg-white mx-3 md:mx-8 rounded-full px-3 md:px-8">
+
+        <button class="px-3 p-2 inline-block lg:hidden" x-on:click="showDrawer = !showDrawer">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <a href="#">
+            <img src="https://billpoint.co/assets/frontend/assets/images/logo.png" alt="" />
+        </a>
+
+      <ul class="hidden lg:flex items-center space-x-8">
+    <li>
+        <a href="/">Home</a>
+    </li>
+
+    <li>
+        <a href="https://billpoint.co/about-us">About</a>
+    </li>
+
+    <li>
+        <a href="https://billpoint.co/faq">FAQ</a>
+    </li>
+    <li>
+        <a href="https://billpoint.co/contact">Contact Us</a>
+    </li>
+    <li>
+        <a href="https://billpoint.co/become-agent">Become an Agent</a>
+    </li>
+    <li>
+        <a href="https://billpoint.co/terms">Terms</a>
+    </li>
+</ul>
+
+      <button x-on:click="$dispatch('trigger-open-modal')"  class="bg-white rounded-full px-5 text-xs md:text-base sm:px-10 py-3 border border-primary flex items-center space-x-3">
+        <span>Download app</span>
+        <img src="https://billpoint.co/assets/frontend/assets/svgs/arrow-right.svg" alt="" class="hidden md:inline"/>
+     </button>
+    </header>
+</section>
+<div class="container">
+    <section class="grid md:grid-cols-2 gap-5 text-white">
+        <section class="order-2 md:order-1 flex flex-col justify-center items-start space-y-5">
+            <button
+                class="bg-white text-dark rounded-full px-2 text-xs md:text-base py-2 pr-5 md:pr-10 flex items-center space-x-3">
+                <span class="text-white rounded-full bg-primary font-light px-3 py-1">New</span>
+                <span>Billpoint is live in Nigeria</span>
+                <img src="https://billpoint.co/assets/frontend/assets/svgs/arrow-right.svg" alt=""
+                    class="brightness-0" />
+            </button>
+
+            <header class="relative">
+                <h1 class="title leading-none">The Ultimate Bill-Paying Solution.</h1>
+                <img src="https://billpoint.co/assets/frontend/assets/svgs/stroke.svg" alt="">
+            </header>
+            <div class="space-y-5 relative z-20">
+                <p>Our platform makes paying bills easy and hassle-free.</p>
+
+
+
+
+
+
+
+
+                <div class="flex items-center space-x-3 md:space-x-5">
+                    <a href="https://play.google.com/store/apps/details?id=co.billpoint.app&pcampaignid=web_share">
+                        <img src="https://billpoint.co/assets/frontend/assets/images/google_play.png" alt="Google Play" class="relative z-20">
+                    </a>
+                    <a href="https://apps.apple.com/ng/app/9ja-billpoint/id6742237382">
+                        <img src="https://billpoint.co/assets/frontend/assets/images/apple_store.png" alt="Apple Store" class="relative z-20">
+                    </a>
+                </div>
+            </div>
+        </section>
+        <section class="order-1 md:order-2">
+            <img src="https://billpoint.co/assets/frontend/assets/images/hero_mobile_app.png" alt=""
+                class="scale-95" />
+        </section>
+    </section>
+</div>
+
+<img src="https://billpoint.co/assets/frontend/assets/svgs/polygon.svg" class="absolute bottom-5 right-5 z-0"
+    alt="" />
+</section>
+
+
+<section class="py-16">
+<section class="container space-y-16">
+
+    <header class="flex flex-col items-center text-center md:w-3/4 mx-auto space-y-3 relative">
+        <h1 class="title leading-none">Over <span class="text-primary relative inline-block">30+ <img
+                    src="https://billpoint.co/assets/frontend/assets/svgs/frame.svg" alt=""
+                    class="absolute top-0 left-0" /></span>
+            service providers <br /> brands connected to billpoint</h1>
+
+        <p>making the lives of users much easier</p>
+        <img src="https://billpoint.co/assets/frontend/assets/images/million_happy_users.png"
+            class="absolute -right-[50px] -top-10  hidden md:block" alt="">
+    </header>
+
+    <img src="https://billpoint.co/assets/frontend/assets/images/providers.png" alt="" />
+</section>
+</section>
+
+
+
+
+<section class="py-16 bg-light-orange">
+<section class="container space-y-16">
+
+    <header class="flex flex-col items-center text-center md:w-1/2 mx-auto">
+        <h1 class="title">Our Services</h1>
+
+        <p>Pay all your bills at once, without leaving your home with BillPoint's comprehensive range of
+            services.</p>
+    </header>
+
+
+    <section class="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+        <div class="rounded-xl bg-white flex items-center justify-start space-x-2 p-4">
+            <img src="https://billpoint.co/assets/frontend/assets/svgs/service3.svg" alt="">
+            <div class="p-5 space-y-2">
+                <h2 class="font-semibold">Electricity Bills</h2>
+                <p class="text-dark">Never miss a due date or wait in long lines again! Pay your electricity
+                    bills with ease using the Billpoint app.</p>
+            </div>
+        </div>
+
+        <div class="rounded-xl bg-white flex items-center justify-start space-x-2 p-4">
+            <img src="https://billpoint.co/assets/frontend/assets/svgs/service3.svg" alt="">
+            <div class="p-5 space-y-2">
+                <h2 class="font-semibold">Electricity Bills</h2>
+                <p class="text-dark">Managing education expenses can be challenging, but with Billpoint, paying
+                    for tuition, fees, and other education-related bills is easy and stress-free</p>
+            </div>
+        </div>
+
+
+        <div class="rounded-xl bg-white flex items-center justify-start space-x-2 p-4">
+            <img src="https://billpoint.co/assets/frontend/assets/svgs/topup.svg" alt="">
+            <div class="p-5 space-y-2">
+                <h2 class="font-semibold">Airtime Topup</h2>
+                <p class="text-dark">Stay connected with your loved ones and top up your airtime with
+                    Billpoint. It's quick, easy, and available 24/7!</p>
+            </div>
+        </div>
+
+
+        <div class="rounded-xl bg-white flex items-center justify-start space-x-2 p-4">
+            <img src="https://billpoint.co/assets/frontend/assets/svgs/service1.svg" alt="">
+            <div class="p-5 space-y-2">
+                <h2 class="font-semibold">Betting</h2>
+                <p class="text-dark">Feeling lucky? Bet on your favorite sports games or events with Billpoint
+                    and enjoy the thrill of the game</p>
+            </div>
+        </div>
+
+
+        <div class="rounded-xl bg-white flex items-center justify-start space-x-2 p-4">
+            <img src="https://billpoint.co/assets/frontend/assets/svgs/dollar.svg" alt="">
+            <div class="p-5 space-y-2">
+                <h2 class="font-semibold">Cable TV Subscription</h2>
+                <p class="text-dark">Get uninterrupted access to your favorite TV shows and channels by
+                    subscribing to your cable TV with Billpoint</p>
+            </div>
+        </div>
+
+        <div class="rounded-xl bg-white flex items-center justify-start space-x-2 p-4">
+            <img src="https://billpoint.co/assets/frontend/assets/svgs/service4.svg" alt="">
+            <div class="p-5 space-y-2">
+                <h2 class="font-semibold">Data Bundle Topup</h2>
+                <p class="text-dark">Stay connected to the internet no matter where you are with Billpoint's
+                    easy data bundle top-up service</p>
+            </div>
+        </div>
+
+        <div class="rounded-xl bg-white flex items-center justify-start space-x-2 p-4 lg:col-span-2">
+            <img src="https://billpoint.co/assets/frontend/assets/svgs/service1.svg" alt="">
+            <div class="p-5 space-y-2">
+                <h2 class="font-semibold">Showmax subscription</h2>
+                <p class="text-dark">Never miss your favorite shows again! Subscribe to Showmax with Billpoint
+                    and enjoy unlimited access to top-rated TV series, movies, and more</p>
+            </div>
+        </div>
+
+        <div class="rounded-xl bg-white flex items-center justify-start space-x-2 p-4">
+            <img src="https://billpoint.co/assets/frontend/assets/svgs/dollar.svg" alt="">
+            <div class="p-5 space-y-2">
+                <h2 class="font-semibold">Internet Topup</h2>
+                <p class="text-dark">Whether you need internet for work, study, or entertainment, Billpoint
+                    makes it easy to top up your internet and stay connected</p>
+            </div>
+        </div>
+
+
+    </section>
+</section>
+</section>
+
+
+<section class="my-16">
+<section class="container">
+    <section class="grid md:grid-cols-2 gap-10">
+
+        <section class="order-2 md:order-1 p-5 md:p-10">
+            <img src="https://billpoint.co/assets/frontend/assets/images/steps_mobile_app.png" alt=""
+                class="rounded-full border border-orange-500 " />
+        </section>
+
+
+        <section class="order-1 md:order-2 space-y-5">
+            <header>
+                <h1 class="title leading-none">3 Simple Steps to Enjoy <br /> <span
+                        class="text-primary">BillPoint.</span></h1>
+            </header>
+            <div class="space-y-3">
+                <section class="flex items-start space-x-3">
+                    <button class="min-w-[40px] min-h-[40px] rounded-full border border-primary text-primary">
+                        1
+                    </button>
+                    <div class="">
+                        <h2 class="text-2xl font-['Briston']">Download and Install the App</h2>
+                        <p class="font-light">
+                            Visit your app store, search for "BillPoint" and download and install the app on
+                            your mobile device.
+                        </p>
+                    </div>
+                </section>
+
+                <section class="flex items-start space-x-3">
+                    <button class="min-w-[40px] min-h-[40px] rounded-full border border-primary text-primary">
+                        2
+                    </button>
+                    <div class="">
+                        <h2 class="text-2xl font-['Briston']">Sign Up on Billpoint for free</h2>
+                        <p class="font-light">
+                            Open the app and follow the quick and easy sign-up process. All you need is your
+                            basic personal information.
+                        </p>
+                    </div>
+                </section>
+
+                <section class="flex items-start space-x-3">
+                    <button class="min-w-[40px] min-h-[40px] rounded-full border border-primary text-primary">
+                        3
+                    </button>
+                    <div class="">
+                        <h2 class="text-2xl font-['Briston']">Add Funds and Pay Bills</h2>
+                        <p class="font-light">
+                            Once you're signed in, you can add funds to your account and start paying your
+                            bills. It's that simple!
+                        </p>
+                    </div>
+                </section>
+
+            </div>
+
+            <a href="#"
+                class="bg-primary rounded-full px-5 sm:px-10 py-3 text-white inline-flex items-center justify-start space-x-3">
+                <span>Get the app</span>
+                <img src="https://billpoint.co/assets/frontend/assets/svgs/arrow-right.svg" alt=""
+                    class="brightness-200">
+            </a>
+        </section>
+
+
+
+    </section>
+</section>
+</section>
+
+
+
+
+<section class="py-16 bg-light-orange">
+<section class="container space-y-16">
+
+    <header class="flex flex-col items-center text-center md:w-1/2 mx-auto">
+        <h1 class="title">Why choose <span class="text-primary">Billpoint</span></h1>
+
+        <p>Esteem spirit temper too say adieus who direct esteem. It esteems luckily or picture placing drawing.
+        </p>
+    </header>
+
+
+    <section class="grid md:grid-cols-2 gap-10">
+        <div class="rounded-[30px] bg-white flex items-center justify-start space-x-2 p-4">
+            <img src="https://billpoint.co/assets/frontend/assets/svgs/service3.svg" alt="">
+            <div class="p-5 space-y-2">
+                <h2 class="font-semibold">Simplify Your Payments with BillPoint</h2>
+                <p class="text-dark">With BillPoint, you can enjoy a hassle-free payment experience for all
+                    your essential bills and services. We offer a simple, fast, and secure way to pay your
+                    utility bills, and even place bets all in one place.</p>
+            </div>
+        </div>
+
+        <div class="rounded-[30px] bg-white flex items-center justify-start space-x-2 p-4">
+            <img src="https://billpoint.co/assets/frontend/assets/svgs/service3.svg" alt="">
+            <div class="p-5 space-y-2">
+                <h2 class="font-semibold">Save Time and Effort</h2>
+                <p class="text-dark">Say goodbye to the tedious task of paying bills. BillPoint streamlines the
+                    process, allowing you to make payments with just a few clicks. Plus, our platform is
+                    available 24/7, so you can pay your bills whenever and wherever it’s convenient for you.</p>
+            </div>
+        </div>
+
+
+        <div class="rounded-[30px] bg-white flex items-center justify-start space-x-2 p-4">
+            <img src="https://billpoint.co/assets/frontend/assets/svgs/service3.svg" alt="">
+            <div class="p-5 space-y-2">
+                <h2 class="font-semibold">Secure and Reliable</h2>
+                <p class="text-dark">Your security is our top priority at BillPoint. We use the latest
+                    technology to ensure that your personal and financial information is always safe and
+                    protected. Our platform is also reliable, with a seamless payment process that ensures your
+                    transactions are processed quickly and accurately.</p>
+            </div>
+        </div>
+
+
+        <div class="rounded-[30px] bg-white flex items-center justify-start space-x-2 p-4">
+            <img src="https://billpoint.co/assets/frontend/assets/svgs/service3.svg" alt="">
+            <div class="p-5 space-y-2">
+                <h2 class="font-semibold">Earn Rewards</h2>
+                <p class="text-dark">With BillPoint, you can earn rewards for every successful referral you
+                    make. Simply share your referral code with friends and family, and when they sign up and
+                    make their first deposit, you'll both receive a bonus. Plus, you'll get an additional bonus
+                    on your first referral's deposit.</p>
+            </div>
+        </div>
+
+
+
+    </section>
+</section>
+</section>
+
+
+
+
+<section class="my-16">
+<section class="container space-y-16">
+
+    <header class="flex flex-col items-center text-center md:w-1/2 mx-auto">
+        <h1 class="title">Checkout our <span class="text-primary">FAQs</span></h1>
+
+        <p>Have a question about our services? Our FAQ section has got you covered with helpful information on
+            all of our offerings.</p>
+    </header>
+
+
+    <section class="grid md:grid-cols-2 gap-10" x-data="{ faqType: 'general' }">
+
+        <section class="order-2 md:order-1 hidden md:block">
+            <div class="rounded-2xl bg-primary p-5 md:p-7 space-y-5">
+                <button x-on:click="faqType = 'general'"
+                    :class="faqType == 'general' ? 'bg-white text-dark' : 'border border-gray-300 text-white'"
+                    class="flex items-center space-x-3 w-full rounded-full py-3 px-4">
+                    <div class="faq-button-style">
+                        <i class="fas fa-chevron-down" :class="show ? 'fas fa-chevron-down' : ''"></i>
+                    </div>
+                    <span>General Questions</span>
+                </button>
+
+
+                <button x-on:click="faqType = 'Data'"
+                    :class="faqType == 'Data' ? 'bg-white text-dark' : 'border border-gray-300 text-white'"
+                    class="flex items-center space-x-3 w-full rounded-full py-3 px-4">
+                    <div class="faq-button-style">
+                        <i class="fas fa-chevron-up" x-show="faqType == 'Data'"></i>
+                        <img src="https://billpoint.co/assets/frontend/assets/svgs/wifi.svg" alt=""
+                            x-show="faqType != 'Data'">
+                    </div>
+                    <span>Data Bundle Questions</span>
+                </button>
+
+
+
+                <button x-on:click="faqType = 'Airtime'"
+                    :class="faqType == 'Airtime' ? 'bg-white text-dark' : 'border border-gray-300 text-white'"
+                    class="flex items-center space-x-3 w-full rounded-full py-3 px-4">
+                    <div class="faq-button-style">
+                        <i class="fas fa-chevron-up" x-show="faqType == 'Airtime'"></i>
+                        <img src="https://billpoint.co/assets/frontend/assets/svgs/telephone.svg" alt=""
+                            x-show="faqType != 'Airtime'">
+                    </div>
+                    <span>Airtime Topup Questions</span>
+                </button>
+
+
+                <button x-on:click="faqType = 'Betting'"
+                    :class="faqType == 'Betting' ? 'bg-white text-dark' : 'border border-gray-300 text-white'"
+                    class="flex items-center space-x-3 w-full rounded-full py-3 px-4">
+                    <div class="faq-button-style">
+                        <i class="fas fa-chevron-up" x-show="faqType == 'Betting'"></i>
+                        <img src="https://billpoint.co/assets/frontend/assets/svgs/game.svg" alt=""
+                            x-show="faqType != 'Betting'">
+                    </div>
+                    <span>Betting Questions</span>
+                </button>
+
+                <button x-on:click="faqType = 'Utility'"
+                    :class="faqType == 'Utility' ? 'bg-white text-dark' : 'border border-gray-300 text-white'"
+                    class="flex items-center space-x-3 w-full rounded-full py-3 px-4">
+                    <div class="faq-button-style">
+                        <i class="fas fa-chevron-up" x-show="faqType == 'Utility'"></i>
+                        <img src="https://billpoint.co/assets/frontend/assets/svgs/house.svg" alt=""
+                            x-show="faqType != 'Utility'">
+                    </div>
+                    <span>Utility Bills Questions</span>
+                </button>
+
+
+                <button x-on:click="faqType = 'Cable'"
+                    :class="faqType == 'Cable' ? 'bg-white text-dark' : 'border border-gray-300 text-white'"
+                    class="flex items-center space-x-3 w-full rounded-full py-3 px-4">
+                    <div class="faq-button-style">
+                        <i class="fas fa-chevron-up" x-show="faqType == 'Cable'"></i>
+                        <img src="https://billpoint.co/assets/frontend/assets/svgs/monitor.svg" alt=""
+                            x-show="faqType != 'Cable'">
+                    </div>
+                    <span>Cable TV Questions</span>
+                </button>
+
+                <a href="#"
+                    class="bg-white rounded-full px-5 w-full text-xs md:text-base sm:px-10 py-3 text-primary text-center  justify-center flex items-center space-x-3">
+                    <span>Still have questions? Contact us</span>
+                    <img src="https://billpoint.co/assets/frontend/assets/svgs/arrow-right.svg" alt=""
+                        class="hidden md:inline" />
+                </a>
+            </div>
+
+
+
+        </section>
+
+
+        <section class="order-1 md:order-2 space-y-5">
+
+            <section x-show="faqType == 'general">
+                <div class="rounded-2xl p-5 space-y-3" x-data="{ show: true }"
+                    :class="show ? 'bg-deep-primary text-white' : 'bg-white'" x-on:click.away="show = false">
+                    <header class="flex items-center space-x-3 justify-start cursor-pointer">
+                        <button class="min-w-[40px] min-h-[40px] rounded-full border border-gray-300"
+                            :class="show ? 'bg-white text-dark' : ''" x-on:click="show = !show">
+                            <i class="fas fa-chevron-down transition" :class="show ? 'rotate-180' : ''"></i>
+                        </button>
+                        <h2 :class="show ? 'font-bold' : 'font-medium'" x-on:click="show = !show">Why Should I
+                            use Bill Point</h2>
+                    </header>
+                    <p x-show="show">
+                        Using Bill Point is simply the safest and easiest way to pay for Utilities in Nigeria.
+                        It is faster than any other payment platform.You can also use USSD to recharge, it's
+                        that easy. Bill Point strives to give you access to constant Cheap Services and also
+                        keep your data safe through our military grade safety and security system.
+                    </p>
+                </div>
+
+
+                <div class="rounded-2xl p-5 space-y-3" x-data="{ show: false }"
+                    :class="show ? 'bg-deep-primary text-white' : 'bg-white'" x-on:click.away="show = false">
+                    <header class="flex items-center space-x-3 justify-start cursor-pointer">
+                        <button class="min-w-[40px] min-h-[40px] rounded-full border border-gray-300"
+                            :class="show ? 'bg-white text-dark' : ''" x-on:click="show = !show">
+                            <i class="fas fa-chevron-down transition" :class="show ? 'rotate-180' : ''"></i>
+                        </button>
+                        <h2 :class="show ? 'font-bold' : 'font-medium'" x-on:click="show = !show">How Can I
+                            Pay For Utility On Bill Point</h2>
+                    </header>
+                    <p x-show="show">
+                        Using Bill Point is simply the safest and easiest way to pay for Utilities in Nigeria.
+                        It is faster than any other payment platform.You can also use USSD to recharge, it's
+                        that easy. Bill Point strives to give you access to constant Cheap Services and also
+                        keep your data safe through our military grade safety and security system.
+                    </p>
+                </div>
+
+
+                <div class="rounded-2xl p-5 space-y-3" x-data="{ show: false }"
+                    :class="show ? 'bg-deep-primary text-white' : 'bg-white'" x-on:click.away="show = false">
+                    <header class="flex items-center space-x-3 justify-start cursor-pointer">
+                        <button class="min-w-[40px] min-h-[40px] rounded-full border border-gray-300"
+                            :class="show ? 'bg-white text-dark' : ''" x-on:click="show = !show">
+                            <i class="fas fa-chevron-down transition" :class="show ? 'rotate-180' : ''"></i>
+                        </button>
+                        <h2 :class="show ? 'font-bold' : 'font-medium'" x-on:click="show = !show">How do I Pay
+                            Or depoist on BillPoint?</h2>
+                    </header>
+                    <p x-show="show">
+                        Using Bill Point is simply the safest and easiest way to pay for Utilities in Nigeria.
+                        It is faster than any other payment platform.You can also use USSD to recharge, it's
+                        that easy. Bill Point strives to give you access to constant Cheap Services and also
+                        keep your data safe through our military grade safety and security system.
+                    </p>
+                </div>
+
+
+
+                <div class="rounded-2xl p-5 space-y-3" x-data="{ show: false }"
+                    :class="show ? 'bg-deep-primary text-white' : 'bg-white'" x-on:click.away="show = false">
+                    <header class="flex items-center space-x-3 justify-start cursor-pointer">
+                        <button class="min-w-[40px] min-h-[40px] rounded-full border border-gray-300"
+                            :class="show ? 'bg-white text-dark' : ''" x-on:click="show = !show">
+                            <i class="fas fa-chevron-down transition" :class="show ? 'rotate-180' : ''"></i>
+                        </button>
+                        <h2 :class="show ? 'font-bold' : 'font-medium'" x-on:click="show = !show">What Happen
+                            If my card doesn't work?</h2>
+                    </header>
+                    <p x-show="show">
+                        Using Bill Point is simply the safest and easiest way to pay for Utilities in Nigeria.
+                        It is faster than any other payment platform.You can also use USSD to recharge, it's
+                        that easy. Bill Point strives to give you access to constant Cheap Services and also
+                        keep your data safe through our military grade safety and security system.
+                    </p>
+                </div>
+
+                <div class="rounded-2xl p-5 space-y-3" x-data="{ show: false }"
+                    :class="show ? 'bg-deep-primary text-white' : 'bg-white'" x-on:click.away="show = false">
+                    <header class="flex items-center space-x-3 justify-start cursor-pointer">
+                        <button class="min-w-[40px] min-h-[40px] rounded-full border border-gray-300"
+                            :class="show ? 'bg-white text-dark' : ''" x-on:click="show = !show">
+                            <i class="fas fa-chevron-down transition" :class="show ? 'rotate-180' : ''"></i>
+                        </button>
+                        <h2 :class="show ? 'font-bold' : 'font-medium'" x-on:click="show = !show">I was
+                            debited for a failed transaction</h2>
+                    </header>
+                    <p x-show="show">
+                        Using Bill Point is simply the safest and easiest way to pay for Utilities in Nigeria.
+                        It is faster than any other payment platform.You can also use USSD to recharge, it's
+                        that easy. Bill Point strives to give you access to constant Cheap Services and also
+                        keep your data safe through our military grade safety and security system.
+                    </p>
+                </div>
+
+
+
+                <div class="rounded-2xl p-5 space-y-3" x-data="{ show: false }"
+                    :class="show ? 'bg-deep-primary text-white' : 'bg-white'" x-on:click.away="show = false">
+                    <header class="flex items-center space-x-3 justify-start cursor-pointer">
+                        <button class="min-w-[40px] min-h-[40px] rounded-full border border-gray-300"
+                            :class="show ? 'bg-white text-dark' : ''" x-on:click="show = !show">
+                            <i class="fas fa-chevron-down transition" :class="show ? 'rotate-180' : ''"></i>
+                        </button>
+                        <h2 :class="show ? 'font-bold' : 'font-medium'" x-on:click="show = !show">What is
+                            BillPoint?</h2>
+                    </header>
+                    <p x-show="show">
+                        Using Bill Point is simply the safest and easiest way to pay for Utilities in Nigeria.
+                        It is faster than any other payment platform.You can also use USSD to recharge, it's
+                        that easy. Bill Point strives to give you access to constant Cheap Services and also
+                        keep your data safe through our military grade safety and security system.
+                    </p>
+                </div>
+
+
+                <div class="rounded-2xl p-5 space-y-3" x-data="{ show: false }"
+                    :class="show ? 'bg-deep-primary text-white' : 'bg-white'" x-on:click.away="show = false">
+                    <header class="flex items-center space-x-3 justify-start cursor-pointer">
+                        <button class="min-w-[40px] min-h-[40px] rounded-full border border-gray-300"
+                            :class="show ? 'bg-white text-dark' : ''" x-on:click="show = !show">
+                            <i class="fas fa-chevron-down transition" :class="show ? 'rotate-180' : ''"></i>
+                        </button>
+                        <h2 :class="show ? 'font-bold' : 'font-medium'" x-on:click="show = !show">Is BillPoint
+                            safe and secure to use?</h2>
+                    </header>
+                    <p x-show="show">
+                        Using Bill Point is simply the safest and easiest way to pay for Utilities in Nigeria.
+                        It is faster than any other payment platform.You can also use USSD to recharge, it's
+                        that easy. Bill Point strives to give you access to constant Cheap Services and also
+                        keep your data safe through our military grade safety and security system.
+                    </p>
+                </div>
+
+
+                <div class="rounded-2xl p-5 space-y-3" x-data="{ show: false }"
+                    :class="show ? 'bg-deep-primary text-white' : 'bg-white'" x-on:click.away="show = false">
+                    <header class="flex items-center space-x-3 justify-start cursor-pointer">
+                        <button class="min-w-[40px] min-h-[40px] rounded-full border border-gray-300"
+                            :class="show ? 'bg-white text-dark' : ''" x-on:click="show = !show">
+                            <i class="fas fa-chevron-down transition" :class="show ? 'rotate-180' : ''"></i>
+                        </button>
+                        <h2 :class="show ? 'font-bold' : 'font-medium'" x-on:click="show = !show">How do I add
+                            money to my BillPoint wallet?</h2>
+                    </header>
+                    <p x-show="show">
+                        Using Bill Point is simply the safest and easiest way to pay for Utilities in Nigeria.
+                        It is faster than any other payment platform.You can also use USSD to recharge, it's
+                        that easy. Bill Point strives to give you access to constant Cheap Services and also
+                        keep your data safe through our military grade safety and security system.
+                    </p>
+                </div>
+
+
+
+
+
+
+
+            </section>
+        </section>
+
+
+
+    </section>
+</section>
+</section>
+
+
+
+
+    <section class="bg-light-orange">
+        <section class="container">
+
+            <section class="grid lg:grid-cols-2 gap-10">
+                <section class="order-2 lg:order-1 flex flex-col justify-center items-start space-y-5">
+                    <h1 class="title leading-none">
+                        Try Billpoint for free on iOS and Android
+                    </h1>
+
+                    <div class="flex items-center space-x-5 md:space-x-10">
+                        <a href="https://play.google.com/store/apps/details?id=co.billpoint.app&pcampaignid=web_share">
+                            <img src="https://billpoint.co/assets/frontend/assets/images/google_play.png" alt=""
+                            class="h-[50px] w-auto"></a>
+                        <a href="https://apps.apple.com/ng/app/9ja-billpoint/id6742237382">
+                            <img src="https://billpoint.co/assets/frontend/assets/images/apple_store.png" alt=""
+                            class="h-[50px] w-auto">
+                        </a>
+                    </div>
+                </section>
+                <section class="order-1 lg:order-2  flex space-x-5 items-end justify-center">
+                    <img src="https://billpoint.co/assets/frontend/assets/images/mobile_app2.png" alt=""
+                        class="max-w-[350px] h-auto relative lg:top-[100px] z-0" />
+                    <img src="https://billpoint.co/assets/frontend/assets/images/scan.png" alt=""
+                        class="max-w-[150px] h-auto hidden md:block" />
+                </section>
+            </section>
+        </section>
+    </section>
+
+
+
+    <footer class="bg-light-orange relative z-20">
+        <section class="container rounded-t-[100px] bg-dark text-white">
+
+            <section class="grid sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-10 sm:p-10">
+
+                <div
+                    class="flex flex-col sm:flex-row text-center sm:text-left items-center sm:items-start justify-start sm:space-x-5 sm:col-span-2">
+                    <img src="https://billpoint.co/assets/frontend/assets/images/logo.png" alt="">
+                    <div class="text-sm">
+                        <p>BillPoint is a leading payment service provider that enables users to easily and securely pay
+                            for various bills and subscriptions, including electricity, internet, airtime, data bundles,
+                            education bills, cable TV, and more.</p>
+                        <p><strong>Address:</strong> 38 Aminu kano cres Abuja, Nigeria</p>
+                    </div>
+                </div>
+
+
+                <div class="space-y-2">
+                    <h2 class="font-bold">Services</h2>
+                    <ul class="text-sm space-y-3 text-light">
+                        <li>
+                            <a href="#">Data bundle purchases</a>
+                        </li>
+                        <li>
+                            <a href="#">Mobile airtime top-ups</a>
+                        </li>
+                        <li>
+                            <a href="#">Education bill payments</a>
+                        </li>
+                        <li>
+                            <a href="#">Betting services</a>
+                        </li>
+                        <li>
+                            <a href="#">Cable TV subscriptions</a>
+                        </li>
+                        <li>
+                            <a href="#">Utility Payment</a>
+                        </li>
+                    </ul>
+                </div>
+
+
+                <div class="space-y-2">
+                    <h2 class="font-bold">Company</h2>
+                    <ul class="text-sm space-y-3 text-light">
+                        <li>
+                            <a href="#">About Us</a>
+                        </li>
+                        <li>
+                            <a href="#">Privacy Policy</a>
+                        </li>
+                        <li>
+                            <a href="#">Terms of Use</a>
+                        </li>
+                        <li>
+                            <a href="#">Contact Us</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="space-y-2">
+                    <h2 class="font-bold">Info</h2>
+                    <ul class="text-sm space-y-3 text-light">
+                        <li>
+                            <a href="tel:(+234) 907 599 2464" class="font-bold">(+234) 907 599 2464</a>
+                        </li>
+                        <li>
+                            <a href="/cdn-cgi/l/email-protection#eba98784998f8c99849e9bab849e9f87848480c5888486"><span class="__cf_email__" data-cfemail="f8ba94978a9c9f8a978d88b8978d8c94979793d69b9795">[email&#160;protected]</span></a>
+                        </li>
+                    </ul>
+                </div>
+
+
+                <div class="space-y-2">
+                    <h2 class="font-bold">Follow us</h2>
+                    <ul class="text-sm space-y-3 text-light">
+                        <li class="space-x-3">
+                            <a href="#" class="flex items-center space-x-2"><img
+                                    src="https://billpoint.co/assets/frontend/assets/svgs/socials/twitter.svg" alt=""
+                                    class="scale-75" /><span>Twitter</span></a>
+                        </li>
+                        <li>
+                            <a href="#" class="flex items-center space-x-2"><img
+                                    src="https://billpoint.co/assets/frontend/assets/svgs/socials/facebook.svg" alt=""
+                                    class="scale-75" />
+                                <span>Facebook</span></a>
+                        </li>
+                        <li>
+                            <a href="#" class="flex items-center space-x-2"><img
+                                    src="https://billpoint.co/assets/frontend/assets/svgs/socials/instagram.svg"
+                                    alt="" class="scale-75" />
+                                <span>Instagram</span></a>
+                        </li>
+                        <li>
+                            <a href="#" class="flex items-center space-x-2"><img
+                                    src="https://billpoint.co/assets/frontend/assets/svgs/socials/linkedin.svg" alt=""
+                                    class="scale-75" />
+                                <span>LinkedIn</span></a>
+                        </li>
+                        <li>
+                            <a href="#" class="flex items-center space-x-2"><img
+                                    src="https://billpoint.co/assets/frontend/assets/svgs/socials/whatsapp.svg"
+                                    alt="" class="scale-75" />
+                                <span>Whatsapp</span></a>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+            <section
+                class="py-5 flex flex-col justify-center space-y-3 sm:space-y-0 items-center sm:flex-row sm:justify-between text-xs border-t border-gray-500">
+                <div class="text-gray-400">© 2023 Billpoint All rights reserved.</div>
+                <ul class="flex items-center space-x-5">
+                    <li>
+                        <a href="#">Privacy policy</a>
+                    </li>
+                    <li>
+                        <a href="#">Terms of use</a>
+                    </li>
+                </ul>
+            </section>
+        </section>
+    </footer>
+
+        <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script defer src="https://unpkg.com/alpinejs@3.9.0/dist/cdn.min.js"></script>
+</body>
+
+</html>
